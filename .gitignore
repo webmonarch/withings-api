@@ -1,2 +1,8 @@
 /.idea
 /withings-api.iml
+*.gem
+.bundle
+Gemfile.lock
+pkg/*
+/doc
+/.yardoc
