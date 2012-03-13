@@ -52,8 +52,8 @@ module Withings::Api
       @id = hash["grpid"]
       @date_raw = hash["date"]
       @attribution = AttributionType.lookup(hash["attrib"])
-      @category = hash["category"]
-      @measurements = []
+      @category = CategoryType.lookup(hash["category"])
+      @measurements = hash["measures"].map { |h| Measurement.new(h) }
     end
 
     def date
@@ -76,7 +76,7 @@ module Withings::Api
 
       self.update_time_raw = hash["updatetime"]
       self.more = (hash["more"] == true)
-      self.measure_groups = hash["measuregrps"]
+      self.measure_groups = hash["measuregrps"].map { |h| MeasurementGroup.new(h) }
     end
 
     def update_time

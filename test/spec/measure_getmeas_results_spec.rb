@@ -42,30 +42,44 @@ describe API::Measurement do
 
 end
 
+
 describe API::MeasurementGroup do
-#"grpid":2909,
-#"attrib":0,
-#"date":1222930968,
-#"category":1,
-#"measures":[
+  #"grpid":2909,
+  #"attrib":0,
+  #"date":1222930968,
+  #"category":1,
+  #"measures":[
+  shared_examples_for "Sample JSON MeasurementGroup" do
+    it "id == 2909" do
+        subject.id.should == 2909
+      end
+
+      it "attribution == AttributionType::DEVICE" do
+        subject.attribution.should == API::AttributionType::DEVICE
+      end
+
+      it "category == CategoryType::MEASURE" do
+        subject.category.should == API::CategoryType::MEASURE
+      end
+
+      it "date_raw == 1222930968" do
+        subject.date_raw.should == 1222930968
+      end
+
+      it "date == Time.at(1222930968)" do
+        subject.date.should == Time.at(1222930968)
+      end
+
+      it "measurements == []" do
+        subject.measurements.should be_instance_of Array
+        subject.measurements.length.should == 4
+        subject.measurements.each { |m| m.should be_instance_of API::Measurement }
+      end
+  end
+
   subject { API::MeasurementGroup.new(MEASURE_GETMEAS_SAMPLE_HASH["measuregrps"].first) }
 
-  it "id == 2909" do
-    puts MEASURE_GETMEAS_SAMPLE_HASH["measuregrps"].first.inspect
-    subject.id.should == 2909
-  end
-
-  it "attribution == AttributionType::DEVICE" do
-    subject.attribution.should == API::AttributionType::DEVICE
-  end
-
-  it "date_raw == 1222930968" do
-    subject.date_raw.should == 1222930968
-  end
-
-  it "date == Time.at(1222930968)" do
-    subject.date.should == Time.at(1222930968)
-  end
+  it_behaves_like "Sample JSON MeasurementGroup"
 end
 
 #
@@ -91,6 +105,7 @@ describe API::MeasureGetmeasResults do
 
       measure_groups.should be_instance_of Array
       measure_groups.length.should == 2
+      measure_groups.each { |mg| mg.should be_instance_of API::MeasurementGroup }
     end
   end
 
