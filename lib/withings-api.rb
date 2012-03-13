@@ -2,6 +2,7 @@ require "withings-api/version"
 
 require "withings-api/consts"
 require "withings-api/types"
+require "withings-api/tokens"
 require "withings-api/errors"
 require "withings-api/static_helpers"
 
