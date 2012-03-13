@@ -13,6 +13,30 @@ module Withings
       def inspect
         self.description
       end
+
+      #
+      # Lookup helpers for static types
+      #
+
+      @@lookup_by_id = {}
+      @@lookup_by_name = {}
+
+      def self.register(instance)
+        lookup_by_id = @@lookup_by_id[self] ||= {}
+        lookup_by_name = @@lookup_by_name[self] ||= {}
+
+        lookup_by_id[instance.id] = instance
+        lookup_by_name[instance.name] = instance
+      end
+
+      def self.lookup(key)
+        lookup_by_id = @@lookup_by_id[self] ||= {}
+        lookup_by_name = @@lookup_by_name[self] ||= {}
+
+        lookup_by_id[key] || lookup_by_name[key]
+      end
+
+
     end
 
     class MeasurementType < TypeBase
@@ -31,7 +55,10 @@ module Withings
 
     # TODO: Try to figure out how to get calls to this documented in yard
     def self.measurement_type(name, description, id)
-      MeasurementType.const_set(name, MeasurementType.new(id, name, description))
+      instance = MeasurementType.new(id, name, description)
+
+      MeasurementType.const_set(name, instance)
+      MeasurementType.register(instance)
     end
 
     def self.device_type(name, description, id)
@@ -43,7 +70,10 @@ module Withings
     end
 
     def self.attribution_type(name, id, description = nil)
-      AttributionType.const_set(name, AttributionType.new(id, name, description))
+      instance = AttributionType.new(id, name, description)
+
+      AttributionType.const_set(name, instance)
+      AttributionType.register(instance)
     end
 
     public
