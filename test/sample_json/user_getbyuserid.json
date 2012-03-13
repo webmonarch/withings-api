@@ -1,0 +1,16 @@
+{
+    "status":0,
+    "body":{
+        "users":[
+            {
+                "id":29,
+                "firstname":"John",
+                "lastname":"Doe",
+                "shortname":"JON",
+                "gender":0,
+                "fatmethod":0,
+                "birthdate":211629600,
+            }
+        ]
+    }
+}

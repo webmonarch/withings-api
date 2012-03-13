@@ -1,0 +1,15 @@
+{
+    "status":0,
+    "body":{
+        "profiles":[
+            {
+                "expires":2147483647,
+                "comment":"http:\/\/www.withings.com"
+            },
+            {
+                "expires":2147483647,
+                "comment":"http:\/\/www.corp.withings.com"
+            }
+        ]
+    }
+}
