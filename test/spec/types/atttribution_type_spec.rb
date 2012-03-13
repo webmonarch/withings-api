@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), "..", "spec_helper.rb")
+require File.join(File.dirname(__FILE__), "..", "spec_helper")
 
 describe Withings::Api::AttributionType do
   context "It Should Have Static Fields" do
