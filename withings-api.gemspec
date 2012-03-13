@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
 
   # specify any dependencies here; for example:
   s.add_runtime_dependency "oauth", "~> 0.4.5"
+  s.add_runtime_dependency "json"
   # s.add_runtime_dependency "rest-client"
 
   s.add_development_dependency "rspec"
