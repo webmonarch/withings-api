@@ -62,11 +62,17 @@ module Withings
     end
 
     def self.device_type(name, description, id)
-      DeviceType.const_set(name, DeviceType.new(id, name, description))
+      instance = DeviceType.new(id, name, description)
+
+      DeviceType.const_set(name, instance)
+      DeviceType.register(instance)
     end
 
     def self.category_type(name, id, description = nil)
-      CategoryType.const_set(name, CategoryType.new(id, name, description));
+      instance = CategoryType.new(id, name, description)
+
+      CategoryType.const_set(name, instance);
+      CategoryType.register(instance)
     end
 
     def self.attribution_type(name, id, description = nil)
