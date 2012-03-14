@@ -4,6 +4,10 @@ Feature: OAuth request_token Call
   As a withings-api user,
   I need to be able to get an OAuth request token for subsequent authorization by the Withings user.
 
+  #
+  # LIVE TESTS
+  #
+
   Scenario: Succeeds On Live Withings
     Given the live Withings API
     And valid consumer token
@@ -16,7 +20,17 @@ Feature: OAuth request_token Call
     When making a request_token call
     Then the request_token call should fail
 
-  Scenario: Succeeds On Mocked Withings
+  Scenario: Fails With Random Consumer Credentials On Live Withings
+    Given the live Withings API
+    And random consumer token consumer token
+    When making a request_token call
+    Then the request_token call should fail
+
+  #
+  # STUBBED TESTS
+  #
+
+  Scenario: Succeeds On Stubbed Withings
     Given the stubbed Withings API
     And valid consumer token
     And stubbing the HTTP response with request_token/success
@@ -25,14 +39,12 @@ Feature: OAuth request_token Call
     And the request_token key should be "d677dcdefbfe1d00d86fcdc033d9046c76e92e611b6392893923c121b"
     And the request_token secret should be "379667e6b9c1899f678677ef846f498184c577569b664b6181e4422ee77d4d"
 
-
-
-  Scenario: Create Request Token With Valid Consumer Credentials
-  Scenario: Create Request Token With Empty Consumer Credentials
-#    Given withings-api
-#    And invalid consumer credentials
-#    When requesting request token
-#    Then the request token request should fail with exception Net::HTTPFatalError
+  Scenario: Fails With Random Consumer Credentials On Stubbed Withings
+    Given the stubbed Withings API
+    And random consumer token consumer token
+    And stubbing the HTTP response with request_token/invalid_consumer_credentials
+    When making a request_token call
+    Then the request_token call should fail
 
   Scenario: Create Request Token With Random Consumer Credentials
 
