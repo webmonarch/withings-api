@@ -18,6 +18,10 @@ module Withings
         end
       end
 
+      def to_a
+        [key, secret]
+      end
+
     end
 
     class RequestToken < ConsumerToken
