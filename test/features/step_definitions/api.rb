@@ -1,54 +1,52 @@
-require 'withings-api'
+# holds the API instance we are using to test with
+@api = nil
+@consumer_token = nil
+@request_token, @request_token_exception = nil
 
-Given /^withings\-api$/ do
+HTTP_STUB_RESPONSES_DIR = File.join(File.dirname(__FILE__), "../../http_stub_responses")
+
+Given /^the live Withings API$/ do
   @api = Withings::Api
 end
 
-# provide either valid of invalid consumer credentials
-Given /^((in)?valid) consumer credentials$/ do |type, none|
-  valid = (type == "valid")
-
-  @consumer_credentials = valid ?
-      {:key => "08943c64c3ccfe86d5edb40c8db6ddbbc43b6f58779c77d2b02454284db7ec", :secret => "85949316f07fc41346be145fe8fbc18b73f954f280be958033571720510"} :
-      {:key => "", :secret => ""}
+Given /^the stubbed Withings API$/ do
+  @api = Withings::StubbeddApi
 end
 
-Given /^a valid request token response$/ do
-  step "withings-api"
-  step "valid consumer credentials"
-  step "requesting request token"
+Given /^stubbing the HTTP response with ([^\s]+)$/ do |mock_http_response|
+  file = File.new(File.join(HTTP_STUB_RESPONSES_DIR, mock_http_response + ".txt"))
+  File.should exist(file)
+
+  @api.stub_http(file.read)
 end
 
-When /^requesting request token$/ do
-  result_or_exception :request_token do
-    @api.create_request_token(@consumer_credentials[:key], @consumer_credentials[:secret], 'oob')
+Given /^(valid|random|blank) consumer token/ do |token_type|
+  token_type = token_type.to_sym
+  CONSUMER_CREDENTIALS.should include(token_type)
+
+  @consumer_token = CONSUMER_CREDENTIALS[token_type]
+end
+
+When /^making a request_token call$/ do
+  result_or_exception(:request_token) do
+    @api.create_request_token(@consumer_token, "")
   end
 end
 
-When /^requesting access token$/ do
-  result_or_exception(:access_token) do
-    @api.create_access_token(@request_token, "http://localhost:3000")
-  end
-end
-
-# test the request token response
-
-Then /^the request token request should succeed$/ do
-  @request_token_exception.should be_nil
+Then /^the request_token call should succeed$/ do
   @request_token.should be
+  @request_token.key.should =~ /\w+/
+  @request_token.secret.should =~ /\w+/
 
-  puts @request_token.authorization_url
+  @request_token_exception.should be_nil
 end
 
-Then /^the request token request should fail with exception( ([^ ]+))?$/ do |none, exception_name|
-  @request_token.should be_nil
+Then /^the request_token call should fail$/ do
   @request_token_exception.should be
 
-  if exception_name
-    @request_token_exception.should be_instance_of(eval(exception_name))
-  end
+  @request_token.should be_nil
 end
 
-Then /^the access token request should fail with an exception$/ do
-  @access_token_exception.should be
+Then /the request_token (\w+) should be "(\w+)"/ do |field, value|
+  @request_token.send(field).should == value
 end

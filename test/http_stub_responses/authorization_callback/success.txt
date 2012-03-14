@@ -1,0 +1,9 @@
+GET /?userid=36686&oauth_token=10b94617e9e052047cf6ec5cff05e6bd7972035e7b8e01256670764bbff7f&oauth_verifier=OBtxR5W7uyPc2 HTTP/1.1
+Host: localhost:9000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.2) Gecko/20100101 Firefox/10.0.2
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Referer: http://oauth.withings.com/account/authorize?acceptDelegation=true&oauth_consumer_key=08943c64c3ccfe86d5edb40c8db6ddbbc43b6f58779c77d2b02454284db7ec&oauth_nonce=d593ada53e0ee1719317ca82d2201383&oauth_signature=GffXCc6y3Dvn2sMdRIBW2wZYW0E%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1331669032&oauth_token=10b94617e9e052047cf6ec5cff05e6bd7972035e7b8e01256670764bbff7f&oauth_version=1.0&userid=36686
+

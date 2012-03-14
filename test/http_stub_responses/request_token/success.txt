@@ -1,0 +1,11 @@
+HTTP/1.1 200 OK
+date: Tue, 13 Mar 2012 19:58:24 GMT
+server: Apache/2.2.8 (Ubuntu) PHP/5.2.4-2ubuntu5.19 with Suhosin-Patch mod_ssl/2.2.8 OpenSSL/0.9.8g
+x-powered-by: PHP/5.2.4-2ubuntu5.19
+set-cookie: lang_select_language=en; expires=Thu, 13-Mar-2014 19:58:24 GMT; path=/
+vary: Accept-Encoding
+content-length: 151
+connection: close
+content-type: text/html; charset=UTF-8
+
+oauth_token=d677dcdefbfe1d00d86fcdc033d9046c76e92e611b6392893923c121b&oauth_token_secret=379667e6b9c1899f678677ef846f498184c577569b664b6181e4422ee77d4d
