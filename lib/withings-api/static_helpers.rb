@@ -29,10 +29,22 @@ module Withings
       # @raise [ProtocolError] for HTTP 5XX error response codes
       # @raise [OAuth::Unauthorized] for HTTP 4XX error reponse codes
       # @raise [StandardError] for everything else
-      def create_request_token(consumer_token, consumer_secret, callback_url)
+      def create_request_token(consumer_token, *arguments)
+        _consumer_token, _consumer_secret, _callback_url = nil
+
+        if arguments.length == 1 && consumer_token.instance_of?(Withings::Api::ConsumerToken)
+          _consumer_token, _consumer_secret = consumer_token.to_a
+        elsif arguments.length == 2
+          _consumer_token = consumer_token
+          _consumer_secret = arguments.shift
+        else
+          raise(ArgumentError)
+        end
+        _callback_url = arguments.shift
+
         # TODO: warn if the callback URL isn't HTTPS
-        consumer = create_consumer(consumer_token, consumer_secret)
-        oauth_request_token = consumer.get_request_token({:oauth_callback => callback_url})
+        consumer = create_consumer(_consumer_token, _consumer_secret)
+        oauth_request_token = consumer.get_request_token({:oauth_callback => _callback_url})
 
         RequestTokenResponse.new oauth_request_token
       end
