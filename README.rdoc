@@ -1,1 +1,84 @@
-Not much to see here yet.
+withings-api is an easy to use Ruby library providing access to the Withings Body Metrics Services API (WBS API) version 2.
+
+For complete details about the WBS API, see http://www.withings.com/en/api/wbsapiv2
+
+*NOTE, THIS IS A WORK IN PROGRESS, IMPLEMENTATION ISN'T COMPLETE AS OF VERSION 0.0.1*
+
+= Overview
+
+For an example use of the withings-api, see {file:examples/create_access_token.rb examples/create_access_token.rb}.
+
+Broadly speaking, there are two phases to using the withings-api.
+
+1. Retrieve access to user's data via OAuth authentication + authorization
+   * see {file:README.rdoc#OAuth_Authorization OAuth Authorization} section below.
+1. Retrieve user data via authorized OAuth credentials (called "access token" in this documentation).
+   * *NOTE:* This isn't implemented as of version 0.0.1.
+
+== OAuth Authorization
+
+Before you can access user data via the WBS API, you need to go through a process that allows the user to authorize
+your application's access to their data.  This process is handled by a protocol called OAuth 1.0.
+
+For details on Withings implementation of OAuth, see {http://www.withings.com/en/api/oauthguide Withings OAuth Guide}.
+For the complete specification of OAuth 1.0, see {http://tools.ietf.org/html/rfc5849}.
+
+Broadly, these are the steps to getting access to user data via the API.
+
+1. (One Time) Register you application with Withings - https://oauth.withings.com/en/partner/add
+
+   * This will give you a "consumer token" and "consumer secret" which is used to identify and authenticate your application
+   * Some more information about this step, see {http://www.withings.com/en/api/oauthguide#registration Withings OAuth Guide: Registration}
+
+1. Request a temporary "request token" used to identify your request for OAuth authorization.
+
+   * Facilitated by {Withings::Api::StaticHelpers#create_request_token}.
+
+1. Using the "request token", redirect the user to Withings to allow them to log in and authorize your access to their data.
+
+   * Use {Withings::Api::RequestTokenResponse#authorization_url} to get the URL to use.
+   * *Note:* this redirect happens outside of withings-api, usually in your webapp.
+   * When the user authorizes the request, Withings will redirect the user back to your application:
+     * You specify this callback URL in the call to {Withings::Api::StaticHelpers#create_request_token}
+
+1. Request permanent access to the users data with an "access token".
+
+   * Facilitated by {Withings::Api::StaticHelpers#create_access_token}
+
+1. Now you have permanent credentials to use when making calls that access user data.
+
+Once authorized, you can use data access methods for retreiving user Withings data.
+
+== Accessing User Data
+
+**Implementation and Documentation Pending**
+
+= Status
+
+withings-api is currently a work in progress.  Only support for getting OAuth request and access tokens is supported at this time.
+
+== Versions
+
+0.0.1:: Initial public offereing.  OAuth request token and access token support only.  No data access yet.
+
+= License
+
+MIT License, see {file:LICENSE}
+
+= Thanks
+
+Thanks to the following software and tools that inspired and made withings-api possible:
+
+- {http://www.withings.com Withings} - for making awesome hardware and making the data easily accessible
+- {https://github.com/oauth/oauth-ruby OAuth Ruby Gem} - for OAuth plumbing and tools
+- {http://rspec.info/ RSpec} - for unit testing
+- {http://cukes.info/ Cucumber} - for integration and acceptance testing
+- {https://github.com/jnicklas/capybara Capybara} - browser automated acceptance testing
+
+= Alternatives
+
+Don't like withings-api?  Patches, changes, and ideas always welcome.
+
+You can also try {https://github.com/simplificator/simplificator-withings simplificator-withings}.
+
+
