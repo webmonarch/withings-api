@@ -2,6 +2,10 @@ require 'oauth'
 
 module Withings
   module Api
+    module OAuth
+      include ::OAuth
+    end
+
     # Simple API to ease the OAuth setup steps for Withing API client apps.
     #
     # Specifically, this class provides methods for OAuth access token creation.
@@ -56,10 +60,23 @@ module Withings
       # @param [String] user_id user id as returned from Withings via the {RequestTokenResponse#authorization_url}
       #
       # @return [] the shit
-      def create_access_token(request_token, user_id)
-        oauth_request_token = request_token.oauth_request_token
+      def create_access_token(request_token, *arguments)
+        _consumer, _request_token, _user_id = nil
 
-        oauth_access_token = oauth_request_token.get_access_token({:access_token_path => oauth_request_token.consumer.access_token_path})
+        if request_token.instance_of?(RequestTokenResponse) && arguments.length == 1
+          _consumer = request_token.oauth_consumer
+          _request_token = request_token.oauth_request_token
+          _user_id = arguments.shift
+        elsif request_token.instance_of?(RequestToken) && arguments.length == 2
+          request_token.instance_of?(ConsumerToken)
+          _consumer = create_consumer(*arguments.shift.to_a)
+          _request_token = OAuth::RequestToken.new(_consumer, *request_token.to_a)
+          _user_id = arguments.shift
+        else
+          raise ArgumentError
+        end
+
+        oauth_access_token = _consumer.get_access_token(_request_token)
 
         # test for unauthorized token, since oauth + withings doesn't turn this into an explicit
         # error code / exception
@@ -67,7 +84,7 @@ module Withings
           raise StandardError, :"unauthorized token"
         end
 
-        oauth_access_token
+        AccessTokenResponse.new oauth_access_token
       end
 
       private
@@ -109,6 +126,30 @@ module Withings
       end
 
       attr_accessor :oauth_request_token
+
+      # :nodoc:
+      def oauth_consumer
+        self.oauth_request_token.consumer
+      end
+    end
+
+    class AccessTokenResponse
+      def initialize(oauth_access_token)
+        @oauth_access_token = oauth_access_token
+      end
+
+      def token
+        @oauth_access_token.token
+      end
+      alias :key :token
+
+      def secret
+        @oauth_access_token.secret
+      end
+
+      def user_id
+        @oauth_access_token.params["userid"]
+      end
     end
   end
 end
