@@ -1,4 +1,4 @@
-#require 'capybara/cucumber'
+require 'capybara/cucumber'
 
 module ApiCucumberHelpers
   # executes the given block, storing the return value
@@ -22,8 +22,9 @@ World(ApiCucumberHelpers)
 
 # Capybara Setup
 
-#Capybara.default_driver = :selenium
-#World(Capybara::DSL)
+Capybara.default_driver = :selenium
+Capybara.default_wait_time = 5
+World(Capybara::DSL)
 
 # overwrite puts to make it's output more
 # harmonious with the stylized Cucumber

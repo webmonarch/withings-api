@@ -1,4 +1,5 @@
 require 'withings-api'
+require File.join(File.dirname(__FILE__), "../helpers/http_stubber")
 
 API = Withings::Api
 API_MODULE = API
