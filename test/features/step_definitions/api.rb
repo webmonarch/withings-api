@@ -1,7 +1,8 @@
 # holds the API instance we are using to test with
 @api = nil
 @consumer_token = nil
-@request_token, @request_token_exception = nil
+@request_token = nil
+@request_token_response, @request_token_response_exception = nil
 @access_token, @access_token_exception = nil
 
 Given /^the live Withings API$/ do
@@ -30,7 +31,7 @@ Given /a valid request_token from Withings Live/ do
 end
 
 Given /^authorized access request$/ do
-  visit @request_token.authorization_url
+  visit @request_token_response.authorization_url
 
   user = ACCOUNT_CREDENTIALS[:test_user_1]
   fill_in("email", :with => user[:username])
@@ -40,30 +41,36 @@ Given /^authorized access request$/ do
   find("#accepter").click
 end
 
+Given /^(a )?(valid|random) request token$/ do |none, type|
+  @request_token = REQUEST_TOKENS[type.to_sym]
+end
+
 When /^(make|making) a request_token call$/ do |none|
-  result_or_exception(:request_token) do
+  result_or_exception(:request_token_response) do
     @api.create_request_token(@consumer_token, "http://example.com")
   end
 end
 
 When /^(make|making) an access_token call$/ do |none|
   result_or_exception(:access_token) do
-    @api.create_access_token(@request_token, "666")
+    @api.create_access_token(@request_token, @consumer_token, "666")
   end
 end
 
 Then /^(the )?request_token call should succeed$/ do |none|
-  @request_token.should be
-  @request_token.key.should =~ /\w+/
-  @request_token.secret.should =~ /\w+/
+  @request_token_response.should be
+  @request_token_response.key.should =~ /\w+/
+  @request_token_response.secret.should =~ /\w+/
 
-  @request_token_exception.should be_nil
+  @request_token_response_exception.should be_nil
+
+  @request_token = @request_token_response.request_token
 end
 
 Then /^the request_token call should fail$/ do
-  @request_token_exception.should be
+  @request_token_response_exception.should be
 
-  @request_token.should be_nil
+  @request_token_response.should be_nil
 end
 
 Then /^the access_token call should fail$/ do
@@ -73,7 +80,7 @@ Then /^the access_token call should fail$/ do
 end
 
 Then /^the request_token (\w+) should be "(\w+)"$/ do |field, value|
-  @request_token.send(field).should == value
+  @request_token_response.send(field).should == value
 end
 
 Then /^the access_token call should succeed$/ do

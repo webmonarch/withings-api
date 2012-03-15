@@ -125,6 +125,11 @@ module Withings
         self.oauth_request_token.authorize_url
       end
 
+      # @return [RequestToken]
+      def request_token
+        RequestToken.new(self.key, self.secret)
+      end
+
       attr_accessor :oauth_request_token
 
       # :nodoc:

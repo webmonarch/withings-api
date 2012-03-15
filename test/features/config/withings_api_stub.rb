@@ -22,6 +22,11 @@ CONSUMER_CREDENTIALS = {
     :random => Withings::Api::ConsumerToken.new("b4d2b4445d7cbd6c344f666ccd08cd00bbfec9957e83b8887de7c7425dc23b", "0f82b1506f781059f14e034503ebef3534c37c9f75118961884b9b5f274"),
 }
 
+REQUEST_TOKENS = {
+    :valid => Withings::Api::RequestToken.new("d1416462226683d9e5b77f1f4382575c0b86f257d14633d378ef26c90932", "3fef451804934cb0b93f0e1e4f7c4f074230090783899972dc640f9c1216"),
+    :random => Withings::Api::RequestToken.new("92d97461313352285c5e64d6947636d6d47260beff022c112787f838bf53", "035891292e709930840cf842d437c43f1feb64c0f9f494100bf677e13c09"),
+}
+
 ACCOUNT_CREDENTIALS = {
     :test_user_1 => {:username => "withings_api_user_1@keptmetrics.com", :password => "8X4wDDanxwJ8", :user_id => 766103}
 }
