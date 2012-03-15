@@ -1,0 +1,1 @@
+Successfully redirected by Withings.  Return to the examples/create_access_token.rb script and press ENTER to continue.

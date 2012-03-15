@@ -155,6 +155,10 @@ module Withings
       def user_id
         @oauth_access_token.params["userid"]
       end
+
+      def access_token
+        AccessToken.new(self.key, self.secret)
+      end
     end
   end
 end
