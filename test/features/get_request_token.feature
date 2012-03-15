@@ -26,6 +26,12 @@ Feature: OAuth request_token Call
     When making a request_token call
     Then the request_token call should fail
 
+  Scenario: Fails With Invalid Consumer Credentials Secret On Live Withings
+    Given the live Withings API
+    And invalid_secret consumer token consumer token
+    When making a request_token call
+    Then the request_token call should fail
+
   #
   # STUBBED TESTS
   #
