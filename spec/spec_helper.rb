@@ -1,3 +1,7 @@
+# code coverage
+require 'simplecov'
+SimpleCov.start
+
 require 'withings-api'
 
 TEST_RESOURCES = File.expand_path("../test/", File.dirname(__FILE__))
@@ -8,7 +12,6 @@ require_relative "../test/helpers/stubbed_withings_api"
 
 API = Withings::Api
 API_MODULE = API
-
 
 def puts_http
   MethodAliaser.alias_it(Net::HTTP, :transport_request) do |aliased, *arguments|

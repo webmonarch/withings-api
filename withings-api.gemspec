@@ -23,8 +23,10 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "json"
   # s.add_runtime_dependency "rest-client"
 
+  s.add_development_dependency "rake"
   s.add_development_dependency "rspec"
   s.add_development_dependency "cucumber"
   s.add_development_dependency "capybara"
+  s.add_development_dependency "simplecov"
 
 end
