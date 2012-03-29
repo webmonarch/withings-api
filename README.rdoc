@@ -60,6 +60,7 @@ withings-api is currently a work in progress.  Only support for getting OAuth re
 == Versions
 
 0.0.1:: Initial public offereing.  OAuth request token and access token support only.  No data access yet.
+0.0.3:: Basic support for measure_getmeas API call
 
 = License
 
