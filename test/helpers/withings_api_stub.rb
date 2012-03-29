@@ -37,5 +37,4 @@ ACCOUNT_CREDENTIALS = {
 
 ACCESS_TOKENS = {
     :valid => Withings::Api::AccessToken.new("f57fc46b3b2f2dd3d88246e34c4048b0dd8d28cc3cfcfd765bff080960", "83f5563765081cc098b9cf82dd18356b915592147e3df53d33c48cbc295d45"),
-    #:valid => Withings::Api::AccessToken.new("f57fc46b3b2f2dd3d88246e34c4048b0dd8d28cc3cfcfd765bff080960", "J6zix3FfA9LofH0awS24M3HcBYXO5nI1iYe8EfBA"), # for testing only
 }
