@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), "spec_helper")
+require 'spec_helper'
 
 MEASURE_GETMEAS_SAMPLE_HASH = JSON::parse(File.read(File.join(SAMPLE_JSON_DIR, "measure_getmeas.json")))["body"]
 

@@ -1,8 +1,9 @@
-require 'withings-api'
+require "withings-api"
+require_relative "http_stubber"
 
 module Withings
   # A method-for-method copy of {Withings::Api} that allows
-  # us to stub the responses for testing purposes (for things we
+  # us to stub the HTTP responses for testing purposes (for things we
   # cannot, or don't want to hit the live Withings API for)
   module StubbeddApi
     include Withings::Api

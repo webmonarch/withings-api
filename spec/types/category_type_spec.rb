@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), "..", "spec_helper")
+require 'spec_helper'
 
 describe Withings::Api::CategoryType do
   context "It Should Have Static Fields" do

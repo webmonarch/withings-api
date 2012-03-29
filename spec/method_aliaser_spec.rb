@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), "../helpers/method_aliaser")
+require 'spec_helper'
 
 class A
   def value(v = nil)

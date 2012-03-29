@@ -1,7 +1,5 @@
 require 'capybara/cucumber'
 
-require_relative '../../helpers/method_mocker'
-
 module ApiCucumberHelpers
   # executes the given block, storing the return value
   # in an instance variable named "name" or the exception

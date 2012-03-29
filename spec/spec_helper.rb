@@ -1,11 +1,14 @@
 require 'withings-api'
-require File.join(File.dirname(__FILE__), "../helpers/http_stubber")
-require File.expand_path("../../helpers/withings_api_stub", __FILE__)
+
+TEST_RESOURCES = File.expand_path("../test/", File.dirname(__FILE__))
+SAMPLE_JSON_DIR = File.expand_path("../test/sample_json", File.dirname(__FILE__))
+
+require_relative "../test/helpers/http_stubber"
+require_relative "../test/helpers/stubbed_withings_api"
 
 API = Withings::Api
 API_MODULE = API
 
-SAMPLE_JSON_DIR = File.join(File.dirname(__FILE__), "..", "sample_json")
 
 def puts_http
   MethodAliaser.alias_it(Net::HTTP, :transport_request) do |aliased, *arguments|

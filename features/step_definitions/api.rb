@@ -1,4 +1,4 @@
-require_relative "../../helpers/withings_api_stub"
+require_relative '../../test/helpers/stubbed_withings_api'
 
 # holds the API instance we are using to test with
 @api = nil

@@ -1,4 +1,4 @@
-require_relative "spec_helper"
+require 'spec_helper'
 
 describe "Hash#to_query_string" do
   context "Expected Results" do

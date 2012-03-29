@@ -2,8 +2,7 @@
 # ss
 #
 
-require_relative "method_aliaser"
-require_relative "http_stubber"
+require_relative "../../test/helpers/method_aliaser"
 require 'net/http'
 
 def before_after_method_wrap(clazz, method_sym, &block)
