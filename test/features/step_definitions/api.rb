@@ -1,9 +1,13 @@
+require_relative "../../helpers/withings_api_stub"
+
 # holds the API instance we are using to test with
 @api = nil
 @consumer_token = nil
 @request_token = nil
 @request_token_response, @request_token_response_exception = nil
 @access_token, @access_token_exception = nil
+
+@api_call_response, @api_call_response_exception = nil
 
 Given /^the live Withings API$/ do
   @api = Withings::Api
@@ -45,6 +49,10 @@ Given /^(a )?(valid|random) request token$/ do |none, type|
   @request_token = REQUEST_TOKENS[type.to_sym]
 end
 
+Given /^a valid access token$/ do
+  @access_token = ACCESS_TOKENS[:valid]
+end
+
 When /^(make|making) a request_token call$/ do |none|
   result_or_exception(:request_token_response) do
     @api.create_request_token(@consumer_token, "http://example.com")
@@ -54,6 +62,12 @@ end
 When /^(make|making) an access_token call$/ do |none|
   result_or_exception(:access_token) do
     @api.create_access_token(@request_token, @consumer_token, "666")
+  end
+end
+
+When /^requesting the measure\/getmeas API$/ do
+  result_or_exception(:api_call_response) do
+    @api.measure_getmeas({}, @consumer_token, @access_token)
   end
 end
 
@@ -91,4 +105,9 @@ Then /^the access_token call should succeed$/ do
   @access_token.user_id.should =~ /\d+/
 
   @access_token_exception.should be_nil
+end
+
+Then /^the measure\/getmeas call should succeed$/ do
+  @api_call_response.should be
+  @api_call_response_exception.should_not be
 end

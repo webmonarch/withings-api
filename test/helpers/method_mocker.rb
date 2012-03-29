@@ -2,8 +2,8 @@
 # ss
 #
 
-require File.join(File.dirname(__FILE__), "../../helpers/method_aliaser")
-require File.join(File.dirname(__FILE__), "../../helpers/http_stubber")
+require_relative "method_aliaser"
+require_relative "http_stubber"
 require 'net/http'
 
 def before_after_method_wrap(clazz, method_sym, &block)
@@ -34,4 +34,4 @@ def print_http_req_resp
   end
 end
 
-#print_http_req_resp
+print_http_req_resp

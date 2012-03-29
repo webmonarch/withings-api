@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+date: Thu, 29 Mar 2012 02:01:41 GMT
+server: Apache/2.2.14 (Ubuntu)
+vary: Accept-Encoding
+content-type: text/plain
+via: 1.1 proxyapi.withings.net
+connection: close
+
+{"status":0,"body":{"updatetime":1332986501,"measuregrps":[{"grpid":54510546,"attrib":0,"date":1331671174,"category":1,"measures":[{"value":63500,"type":1,"unit":-3}]},{"grpid":54510441,"attrib":2,"date":1331671094,"category":1,"measures":[{"value":680,"type":1,"unit":-1},{"value":183,"type":4,"unit":-2}]},{"grpid":54510987,"attrib":2,"date":1264691627,"category":1,"measures":[{"value":6862,"type":1,"unit":-2},{"value":5733,"type":5,"unit":-2},{"value":16453,"type":6,"unit":-3},{"value":1129,"type":8,"unit":-2}]},{"grpid":54510986,"attrib":2,"date":1264606773,"category":1,"measures":[{"value":6840,"type":1,"unit":-2},{"value":5634,"type":5,"unit":-2},{"value":17632,"type":6,"unit":-3},{"value":1206,"type":8,"unit":-2}]}]}}

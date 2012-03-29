@@ -1,20 +1,6 @@
 require 'json'
 
 module Withings::Api
-  module ResultsHelpers
-    def coerce_hash(o)
-      if o.instance_of? Hash
-        o
-      elsif o.instance_of? String
-        JSON::parse(o)
-      else
-        nil
-      end
-    end
-  end
-
-
-
   # Class encapsulating a Measurement
   #
   # See www.withings.com/en/api/wbsapiv2
@@ -74,7 +60,7 @@ module Withings::Api
     def initialize(json_or_hash)
       hash = coerce_hash json_or_hash
 
-      self.update_time_raw = hash["updatetime"]
+      self.update_time_raw = hash["updatetime"] || raise(ArgumentError)
       self.more = (hash["more"] == true)
       self.measure_groups = hash["measuregrps"].map { |h| MeasurementGroup.new(h) }
     end

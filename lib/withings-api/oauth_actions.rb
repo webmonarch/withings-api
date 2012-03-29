@@ -13,7 +13,9 @@ module Withings
     # 1. Request request tokens - via {#create_request_token}
     # 1. Redirect to authorization URL (this is handled outside of these methods, ie: by the webapp, etc.)
     # 1. Request access tokens (for permanent access to Withings content) - via {#create_access_token}
-    module StaticHelpers
+    module OAuthActions
+      include OAuthBase
+
       Defaults = Withings::Api::Defaults
 
       # Issues the "request_token" oauth HTTP request to Withings.
@@ -87,78 +89,6 @@ module Withings
         AccessTokenResponse.new oauth_access_token
       end
 
-      private
-
-      def create_consumer(consumer_key, consumer_secret)
-        OAuth::Consumer.new(consumer_key, consumer_secret, {
-            :site => Defaults::OAUTH_BASE_URL,
-            :scheme        => :query_string,
-            :http_method   => :get,
-            :signature_method   => 'HMAC-SHA1',
-            :request_token_path => Defaults::OAUTH_REQUEST_TOKEN_PATH,
-            :authorize_path     => Defaults::OAUTH_AUTHORIZE_PATH,
-            :access_token_path  => Defaults::OAUTH_ACCESS_TOKEN_PATH,
-        })
-      end
-    end
-
-    # Simple wrapper class that encapsulates the results of a call to {StaticHelpers#create_request_token}
-    class RequestTokenResponse
-      def initialize(oauth_request_token)
-        self.oauth_request_token = oauth_request_token
-      end
-
-      # @return [String] the OAuth request token key
-      def token
-        self.oauth_request_token.token
-      end
-
-      alias :key :token
-
-      # @return [String] the OAuth request token secret
-      def secret
-        self.oauth_request_token.secret
-      end
-
-      # @return [String] URL to redirect the user to to authorize the access to their data
-      def authorization_url
-        self.oauth_request_token.authorize_url
-      end
-
-      # @return [RequestToken]
-      def request_token
-        RequestToken.new(self.key, self.secret)
-      end
-
-      attr_accessor :oauth_request_token
-
-      # :nodoc:
-      def oauth_consumer
-        self.oauth_request_token.consumer
-      end
-    end
-
-    class AccessTokenResponse
-      def initialize(oauth_access_token)
-        @oauth_access_token = oauth_access_token
-      end
-
-      def token
-        @oauth_access_token.token
-      end
-      alias :key :token
-
-      def secret
-        @oauth_access_token.secret
-      end
-
-      def user_id
-        @oauth_access_token.params["userid"]
-      end
-
-      def access_token
-        AccessToken.new(self.key, self.secret)
-      end
     end
   end
 end

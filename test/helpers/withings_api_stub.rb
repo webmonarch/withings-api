@@ -5,7 +5,11 @@ module Withings
   # us to stub the responses for testing purposes (for things we
   # cannot, or don't want to hit the live Withings API for)
   module StubbeddApi
-    extend Withings::Api::StaticHelpers
+    include Withings::Api
+
+    extend OAuthActions
+    extend ApiActions
+
     extend self
 
     def stub_http(canned_response)
@@ -29,4 +33,9 @@ REQUEST_TOKENS = {
 
 ACCOUNT_CREDENTIALS = {
     :test_user_1 => {:username => "withings_api_user_1@keptmetrics.com", :password => "8X4wDDanxwJ8", :user_id => 766103}
+}
+
+ACCESS_TOKENS = {
+    :valid => Withings::Api::AccessToken.new("f57fc46b3b2f2dd3d88246e34c4048b0dd8d28cc3cfcfd765bff080960", "83f5563765081cc098b9cf82dd18356b915592147e3df53d33c48cbc295d45"),
+    #:valid => Withings::Api::AccessToken.new("f57fc46b3b2f2dd3d88246e34c4048b0dd8d28cc3cfcfd765bff080960", "J6zix3FfA9LofH0awS24M3HcBYXO5nI1iYe8EfBA"), # for testing only
 }
