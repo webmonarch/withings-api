@@ -13,7 +13,11 @@ describe "Withings::Api.measure_getmeas()" do
       end
 
       it "Succeeds With No Parameters" do
-        api_response = Withings::Api.measure_getmeas({:userid => 766103}, valid_access_token, valid_consumer_token)
+        Withings::Api.measure_getmeas(valid_consumer_token, valid_access_token, {})
+      end
+
+      it "Succeeds With userid Parameter" do
+        Withings::Api.measure_getmeas(valid_consumer_token, valid_access_token, {:userid => 766103})
       end
 
     end
