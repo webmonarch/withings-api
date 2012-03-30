@@ -90,5 +90,75 @@ module Withings
       end
 
     end
+
+    # Encapsulates the results of a call to {#create_request_token}
+    class RequestTokenResponse
+      # @return [String] the OAuth request token key
+      def token
+        self.oauth_request_token.token
+      end
+
+      alias :key :token
+
+      # @return [String] the OAuth request token secret
+      def secret
+        self.oauth_request_token.secret
+      end
+
+      # @return [String] URL to redirect the user to to authorize the access to their data
+      def authorization_url
+        self.oauth_request_token.authorize_url
+      end
+
+      # @return [RequestToken] a RequestToken representation of
+      def request_token
+        RequestToken.new(self.key, self.secret)
+      end
+
+
+      # @private
+      attr_accessor :oauth_request_token
+
+      # @private
+      def initialize(oauth_request_token)
+        self.oauth_request_token = oauth_request_token
+      end
+
+      # @private
+      def oauth_consumer
+        self.oauth_request_token.consumer
+      end
+    end
+
+    # Encapsulates the response from a call to #create_access_token
+    class AccessTokenResponse
+      # @private
+      def initialize(oauth_access_token)
+        @oauth_access_token = oauth_access_token
+      end
+
+      # @return [String] The retrieved OAuth access token key
+      def token
+        @oauth_access_token.token
+      end
+
+      alias :key :token
+
+      # @return [String] The retrieved OAuth access token secret
+      def secret
+        @oauth_access_token.secret
+      end
+
+      # @return [String] the user_id for the user @ Withings
+      def user_id
+        @oauth_access_token.params["userid"]
+      end
+
+      # @return [AccessToken] an AccessToken representation of the returned key + secret pair
+      def access_token
+        AccessToken.new(self.key, self.secret)
+      end
+    end
+
   end
 end
