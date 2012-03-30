@@ -2,9 +2,20 @@ require "withings-api/results/measure_getmeas_results"
 
 module Withings
   module Api
+
+    # Contains a method corresponding to each API action provided by Withings.
+    #
+    # For a complete list of available API actions, see @ http://www.withings.com/en/api/wbsapiv2
     module ApiActions
       include OAuthBase
 
+      #
+      # @overload measure_getmeas(consumer_token, access_token, api_parameters, options = {})
+      #   @param [ConsumerToken]
+      #   @param [AccessToken]
+      #   @param [Hash] api_parameters (currently, all optional)
+      #   @option api_parameters [String] :user_id
+      #   @param [Hash] options
       def measure_getmeas(*arguments)
         arguments = parse_arguments arguments
 

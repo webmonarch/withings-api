@@ -4,10 +4,10 @@ module Withings
     class ConsumerToken
       attr_accessor :key, :secret
 
-      # Multiple variations
-      #
-      # - #initialize()
-      # - #initialize(key, secret)
+      # @overload initialize()
+      # @overload initialize(key, secret)
+      #   @param [String] key OAuth token key
+      #   @param [String] secret OAuth token secret
       def initialize(*arguments)
         if arguments.length == 0
         elsif arguments.length == 2
@@ -18,6 +18,7 @@ module Withings
         end
       end
 
+      # returns the token values as a [key, value] array
       def to_a
         [key, secret]
       end

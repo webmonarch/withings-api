@@ -32,18 +32,18 @@ Broadly, these are the steps to getting access to user data via the API.
 
 1. Request a temporary "request token" used to identify your request for OAuth authorization.
 
-   * Facilitated by {Withings::Api::StaticHelpers#create_request_token}.
+   * Facilitated by {Withings::Api::OAuthActions#create_request_token}.
 
 1. Using the "request token", redirect the user to Withings to allow them to log in and authorize your access to their data.
 
    * Use {Withings::Api::RequestTokenResponse#authorization_url} to get the URL to use.
    * *Note:* this redirect happens outside of withings-api, usually in your webapp.
    * When the user authorizes the request, Withings will redirect the user back to your application:
-     * You specify this callback URL in the call to {Withings::Api::StaticHelpers#create_request_token}
+     * You specify this callback URL in the call to {Withings::Api::OAuthActions#create_request_token}
 
 1. Request permanent access to the users data with an "access token".
 
-   * Facilitated by {Withings::Api::StaticHelpers#create_access_token}
+   * Facilitated by {Withings::Api::OAuthActions#create_access_token}
 
 1. Now you have permanent credentials to use when making calls that access user data.
 

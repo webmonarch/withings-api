@@ -6,13 +6,16 @@ module Withings
       include ::OAuth
     end
 
-    # Simple API to ease the OAuth setup steps for Withing API client apps.
+    # Methods to ease the OAuth setup steps for using the Withings API.
     #
-    # Specifically, this class provides methods for OAuth access token creation.
+    # Specifically, this class provides methods for OAuth access token creation.  The steps are:
     #
     # 1. Request request tokens - via {#create_request_token}
     # 1. Redirect to authorization URL (this is handled outside of these methods, ie: by the webapp, etc.)
     # 1. Request access tokens (for permanent access to Withings content) - via {#create_access_token}
+    #
+    # After successfully creating an {AccessToken}, you can use the methods provided by {ApiActions} to
+    # query data from Withings.
     module OAuthActions
       include OAuthBase
 
@@ -20,15 +23,24 @@ module Withings
 
       # Issues the "request_token" oauth HTTP request to Withings.
       #
-      # For call details @ Withings, see http://www.withings.com/en/api/oauthguide#access
+      # For the details of this process, see http://www.withings.com/en/api/oauthguide#access
       #
-      # For details about registering your application with Withings, see http://www.withings.com/en/api/oauthguide#registration
+      # To receive the consumer credentials mentioned below, directions on registering your application with Withings is
+      # @ http://www.withings.com/en/api/oauthguide#registration
       #
-      # @param [String] consumer_token the consumer key Withings assigned on app registration
-      # @param [String] consumer_secret the consumer secret Withings assigned on app registration
-      # @param [String] callback_url the URL Withings should return the user to after authorization
+      # @overload create_request_token(consumer_key, consumer_secret, callback_url)
+      #   @param [String] consumer_key the consumer (application) key assigned by Withings
+      #   @param [String] consumer_secret the consumer (application) secret assigned by Withings
+      #   @param [String] callback_url the URL Withings should use upon successful authentication and authorization by
+      #     the user
       #
-      # @return [RequestTokenResponse] something encapsulating the request response
+      # @overload create_request_token(consumer_token, callback_url)
+      #   @param [ConsumerToken] conumer_token the consumer (application) token assigned by Withings
+      #   @param [String] callback_url
+      #
+      # @return [RequestTokenResponse]
+      #
+      # @todo cleanup the list of exceptions raised
       #
       # @raise [Timeout::Error] on connection, or read timeout
       # @raise [SystemCallError] on low level system call errors (connection timeout, connection refused)
@@ -56,12 +68,21 @@ module Withings
       end
 
 
-      # Issues the "access_token" oauth HTTP request to Withings
+      # Issues the "access_token" oauth HTTP request to Withings.
       #
-      # @param [RequestTokenResponse] request_token request token returned from {#create_request_token}
-      # @param [String] user_id user id as returned from Withings via the {RequestTokenResponse#authorization_url}
+      # @note This step needs to happen AFTER successfully retrieving the request token (see {#create_request_token})
+      #   and retrieving the callback from Withings signifying the user has authorized your applications access).
       #
-      # @return [] the shit
+      # @overload create_access_token(request_token, consumer_token, user_id)
+      #   @param [RequestToken] request_token the request token from a previous call to {#create_request_token}}
+      #   @param [ConsumerToken] consumer_token (see #create_request_token)
+      #   @param [String] user_id the Withings userid (note: not currently required by Withings)
+      #
+      # @overload create_access_token(request_token_response, user_id)
+      #   @param [RequestTokenResponse] request_token_response the result received from a previous call to {#create_request_token}
+      #   @param [String] user_id the Withings userid (note: not currently required by Withings)
+      #
+      # @return [AccessTokenResponse]
       def create_access_token(request_token, *arguments)
         _consumer, _request_token, _user_id = nil
 
