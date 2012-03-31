@@ -8,6 +8,7 @@ module Withings::Api
     include ResultsHelpers
 
     attr_accessor :measurement_type, :value_raw, :unit
+    alias :type :measurement_type
 
     def initialize(json_or_hash)
       hash = coerce_hash json_or_hash
@@ -56,6 +57,7 @@ module Withings::Api
 
     attr_accessor :update_time_raw, :more, :measure_groups
     alias :more? :more
+    alias :measurement_groups :measure_groups
 
     def initialize(json_or_hash)
       hash = coerce_hash json_or_hash
