@@ -19,7 +19,7 @@ module Withings::Api
     end
 
     def value
-      value_raw * 10**unit
+      value_raw.to_f * 10**unit
     end
 
   end
