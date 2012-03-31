@@ -10,7 +10,8 @@ describe "Withings::Api.measure_getmeas()" do
     context "Valid" do
       before(:each) do
         stub_http_with_canned("measure_getmeas/success")
-        puts_http
+        puts_http_request
+        puts_http_response
       end
 
       it "Succeeds With No Parameters" do

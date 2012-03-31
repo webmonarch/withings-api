@@ -5,7 +5,6 @@ require_relative "method_aliaser"
 #   including status, headers, and body lines.
 def stub_http_with_string(response_string)
   wrapped = MethodAliaser.alias_it(Net::HTTP, :transport_request) do |aliased, *arguments|
-    wrapped.unalias_it
 
     http_request = arguments.first
     socket_double = Net::BufferedIO.new(StringIO.new(response_string))
@@ -16,6 +15,7 @@ def stub_http_with_string(response_string)
       yield http_response if block_given?
     }
 
+    wrapped.unalias_it
     http_response
   end
 end

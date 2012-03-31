@@ -13,9 +13,18 @@ require_relative "../test/helpers/stubbed_withings_api"
 API = Withings::Api
 API_MODULE = API
 
-def puts_http
-  MethodAliaser.alias_it(Net::HTTP, :transport_request) do |aliased, *arguments|
-    puts "HTTP Request: #{arguments.first.path}"
+def puts_http_request
+  wrapped = MethodAliaser.alias_it(Net::HTTP, :transport_request) do |aliased, *arguments|
+    puts "#{arguments.first.path}"
+    res = aliased.call(*arguments)
+
+    wrapped.unalias_it
+    res
+  end
+end
+
+def puts_http_response
+  wrapped = MethodAliaser.alias_it(Net::HTTP, :transport_request) do |aliased, *arguments|
     res = aliased.call(*arguments)
     puts "HTTP Response:"
     puts "HTTP/#{res.http_version} #{res.code} #{res.message}"
@@ -25,6 +34,11 @@ def puts_http
     puts ""
     puts res.body
 
+    wrapped.unalias_it
     res
   end
+end
+
+def puts(o)
+  Kernel.puts "\33[36m#{o}\33[0m"
 end
