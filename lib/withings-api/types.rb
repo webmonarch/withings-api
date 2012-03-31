@@ -14,6 +14,11 @@ module Withings
         self.description
       end
 
+      # return the value appropriate for sending as a query param to Withings
+      def to_query_param_value
+        id
+      end
+
       #
       # Lookup helpers for static types
       #
@@ -35,7 +40,6 @@ module Withings
 
         lookup_by_id[key] || lookup_by_name[key]
       end
-
 
     end
 

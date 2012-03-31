@@ -3,6 +3,7 @@ module Withings::Api
     include ResultsHelpers
 
     attr_reader :status, :body
+    alias :code :status
 
     def self.create!(http_response, body_class)
       raise HttpNotSuccessError.new(http_response.code, http_response.body) if http_response.code != '200'
@@ -18,6 +19,10 @@ module Withings::Api
       if hash.key?("body")
         @body = body_class.new(hash["body"])
       end
+    end
+
+    def success?
+      status == 0
     end
   end
 end

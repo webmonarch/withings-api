@@ -4,7 +4,21 @@ module Withings
 
     end
 
+    class ApiError < Error
+      attr_reader :code
+
+      def initialize(code)
+        super(code)
+
+        @code = code
+      end
+    end
+
     class InvalidFormat < Error
+
+    end
+
+    class TransportError < Error
 
     end
 

@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'json'
 
 describe "Withings::Api.measure_getmeas()" do
+  let(:api) { Withings::Api }
   let(:valid_consumer_token) { CONSUMER_CREDENTIALS[:valid] }
   let(:valid_access_token) { ACCESS_TOKENS[:valid] }
 
@@ -13,11 +14,16 @@ describe "Withings::Api.measure_getmeas()" do
       end
 
       it "Succeeds With No Parameters" do
-        Withings::Api.measure_getmeas(valid_consumer_token, valid_access_token, {})
+        api.measure_getmeas(valid_consumer_token, valid_access_token, {})
       end
 
       it "Succeeds With userid Parameter" do
-        Withings::Api.measure_getmeas(valid_consumer_token, valid_access_token, {:userid => 766103})
+        api.measure_getmeas(valid_consumer_token, valid_access_token, {:user_id => 766103})
+      end
+
+      it "Succeeds With Parameters [:device_type, :category]" do
+        parameters = {:user_id => 766103, :device_type => Withings::Api::DeviceType::BODY_SCALE, :category_type => Withings::Api::CategoryType::MEASURE}
+        api.measure_getmeas(valid_consumer_token, valid_access_token, parameters)
       end
 
     end
