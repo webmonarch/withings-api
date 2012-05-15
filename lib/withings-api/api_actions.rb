@@ -126,7 +126,7 @@ module Withings
       end
 
       def access_token(o)
-        @consumer_token || o || raise(StandardError, "No access token")
+        @access_token || o || raise(StandardError, "No access token")
       end
     end
   end
