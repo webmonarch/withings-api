@@ -1,4 +1,5 @@
 require "withings-api/results/measure_getmeas_results"
+require "withings-api/results/user_getbyuserid_results"
 
 module Withings
   module Api
@@ -8,7 +9,20 @@ module Withings
     # For a complete list of available API actions, see @ http://www.withings.com/en/api/wbsapiv2
     module ApiActions
       include OAuthBase
+      include SinglyBase
 
+      
+      
+      def singly_user_self(params) 
+        access_token = access_token(params[:access_token])
+        http_response = singly_request!(access_token, "/self")
+        
+        api_response = Withings::Api::SinglyApiResponse.create!(http_response, Withings::Api::UserSelfResults)
+        raise Withings::Api::ApiError.new(api_response.code) unless api_response.success?
+        api_response.body
+      end
+      
+      
       # measure/getmeas API call.  Full details @ www.withings.com/en/api/wbsapiv2#getmeas
       #
       # @overload measure_getmeas(consumer_token, access_token, api_parameters, options = {})
