@@ -18,8 +18,7 @@ module Withings::Api
       @firstname = hash["firstname"]
       @lastname = hash["lastname"]
       @shortname = hash["shortname"]
-      #@gender = GenderType.lookup(hash["gender"])
-      @gender = ( hash["gender"]==0 ? "M" : ( hash["gender"] == 1 ? "F" : "" ) )
+      @gender = GenderType.lookup(hash["gender"])
       @fatmethod = hash["fatmethod"]
       @birthdate = hash["birthdate"]      
     end
@@ -40,7 +39,7 @@ module Withings::Api
     
     def initialize(json_or_hash, singly = nil)
       hash = coerce_hash json_or_hash
-      puts hash.inspect
+
       if singly.nil? then
         ## To Implement
       else
