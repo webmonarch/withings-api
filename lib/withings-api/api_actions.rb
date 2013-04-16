@@ -19,8 +19,7 @@ module Withings
       #   @param [Hash] options
       #
       # @return [UserSelfResults]
-      # @raise [ApiError, Error]
-      
+      # @raise [ApiError, Error]   
       def singly_user_self(params) 
         access_token = access_token(params[:access_token])
         http_response = singly_request!(access_token, "/self")
