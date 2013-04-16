@@ -14,9 +14,8 @@ module Withings
       
       # user/self API call via Singly.  Full details @ http://www.withings.com/en/api#user-getbyuserid and https://singly.com/docs/withings
       #
-      # @overload singly_user_self(options = {})
-      #   @option api_parameters [String] :access_token  The access_token from Singly
-      #   @param [Hash] options
+      # @overload singly_user_self(params = { :access_token, ... })
+      #   @param [String] :access_token The access_token from Singly
       #
       # @return [UserSelfResults]
       # @raise [ApiError, Error]   
@@ -29,7 +28,26 @@ module Withings
         api_response.body
       end
       
-      
+      # measure/getmeas API call via Singly.  Full details @ http://www.withings.com/en/api#measure-getmaes https://singly.com/docs/withings#measures
+      #
+      # @overload singly_measure_getmeas(params = {:access_token, ... })
+      #   @param [String] :access_token The access_token from Singly
+      # 
+      # @return [MeasureGetmeasResults]
+      # @raise [ApiError, Error]
+      def singly_measure_getmeas(params)
+        
+        # extract arguements
+        access_token = access_token(params[:access_token])
+
+        http_response = singly_request!(access_token, "/measures")
+
+        api_response = Withings::Api::SinglyApiResponse.create!(http_response, Withings::Api::MeasureGetmeasResults)
+        raise Withings::Api::ApiError.new(api_response.code) unless api_response.success?
+        api_response.body
+      end
+
+     
       # measure/getmeas API call.  Full details @ www.withings.com/en/api/wbsapiv2#getmeas
       #
       # @overload measure_getmeas(consumer_token, access_token, api_parameters, options = {})

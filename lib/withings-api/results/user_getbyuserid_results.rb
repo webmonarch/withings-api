@@ -38,9 +38,14 @@ module Withings::Api
 
     attr_accessor :user
     
-    def initialize(json_or_hash)
+    def initialize(json_or_hash, singly = nil)
       hash = coerce_hash json_or_hash
-      self.user = User.new(hash)
+      puts hash.inspect
+      if singly.nil? then
+        ## To Implement
+      else
+        self.user = User.new(hash.first['data'])
+      end
     end
 
     def update_time

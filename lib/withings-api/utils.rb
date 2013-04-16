@@ -4,6 +4,8 @@ module Withings::Api
     def coerce_hash(o)
       if o.instance_of? Hash
         o
+      elsif o.instance_of? Array
+        o
       elsif o.instance_of? String
         JSON::parse(o)
       else

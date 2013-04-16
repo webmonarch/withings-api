@@ -59,12 +59,23 @@ module Withings::Api
     alias :more? :more
     alias :measurement_groups :measure_groups
 
-    def initialize(json_or_hash)
+    def initialize(json_or_hash, singly = nil)
       hash = coerce_hash json_or_hash
-
-      self.update_time_raw = hash["updatetime"] || raise(ArgumentError)
-      self.more = (hash["more"] == true)
-      self.measure_groups = hash["measuregrps"].map { |h| MeasurementGroup.new(h) }
+      
+      if singly.nil? then
+        self.update_time_raw = hash["updatetime"] || raise(ArgumentError)
+        self.more = (hash["more"] == true)
+        self.measure_groups = hash["measuregrps"].map { |h| MeasurementGroup.new(h) }
+      else
+        self.update_time_raw = 0
+        self.more = false  
+        self.measure_groups=[]
+        hash.each do |one_hash|
+          self.update_time_raw = [self.update_time_raw, one_hash["at"]].max || raise(ArgumentError)
+          self.measure_groups.push MeasurementGroup.new(one_hash["data"]) 
+        end  
+      
+      end
     end
 
     def update_time

@@ -35,17 +35,15 @@ module Withings::Api
     def self.create!(http_response, body_class)
       raise HttpNotSuccessError.new(http_response.code, http_response.body) if http_response.code != '200'
 
-      self.new(http_response.body.chomp(']').reverse.chomp('[').reverse, body_class)
+      self.new(http_response.body, body_class)
     end
 
     def initialize(string_or_json, body_class)
-      hash = coerce_hash string_or_json
-      
+      array_of_hashes = coerce_hash string_or_json
+
       @status = 0
-      
-      if hash.key?("data")
-        @body = body_class.new(hash["data"])
-      end
+
+      @body = body_class.new(array_of_hashes,true)
     end
 
     def success?
