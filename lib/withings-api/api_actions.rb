@@ -12,6 +12,14 @@ module Withings
       include SinglyBase
 
       
+      # user/self API call via Singly.  Full details @ http://www.withings.com/en/api#user-getbyuserid and https://singly.com/docs/withings
+      #
+      # @overload singly_user_self(options = {})
+      #   @option api_parameters [String] :access_token  The access_token from Singly
+      #   @param [Hash] options
+      #
+      # @return [UserSelfResults]
+      # @raise [ApiError, Error]
       
       def singly_user_self(params) 
         access_token = access_token(params[:access_token])
