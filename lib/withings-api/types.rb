@@ -55,6 +55,9 @@ module Withings
     class AttributionType < TypeBase
     end
 
+    class GenderType < TypeBase
+    end
+
     private
 
     # TODO: Try to figure out how to get calls to this documented in yard
@@ -78,7 +81,14 @@ module Withings
       CategoryType.const_set(name, instance);
       CategoryType.register(instance)
     end
+    
+    def self.gender_type(name, id, description = nil)
+      instance = GenderType.new(id, name, description)
 
+      GenderType.const_set(name, instance);
+      GenderType.register(instance)
+    end
+    
     def self.attribution_type(name, id, description = nil)
       instance = AttributionType.new(id, name, description)
 
@@ -101,8 +111,11 @@ module Withings
     device_type :BODY_SCALE, "Body scale", 1
     device_type :BLOOD_PRESSURE_MONITOR, "Blood pressure monitor", 4
 
-    category_type :MEASURE, 1
-    category_type :TARGET, 2
+    category_type :MEASURE, 1, "Measure" 
+    category_type :TARGET, 2, "Target"
+  
+    gender_type :MALE, 0, "M"
+    gender_type :FEMALE, 1, "F" 
 
     attribution_type :DEVICE, 0, "The measuregroup has been captured by a device and is known to belong to this user (and is not ambiguous)"
     attribution_type :DEVICE_AMBIGUOUS, 1, "The measuregroup has been captured by a device but may belong to other users as well as this one (it is ambiguous)"

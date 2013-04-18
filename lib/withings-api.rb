@@ -8,6 +8,7 @@ require "withings-api/tokens"
 require "withings-api/errors"
 require "withings-api/oauth_base"
 require "withings-api/oauth_actions"
+require "withings-api/singly_base"
 require "withings-api/api_response"
 require "withings-api/api_actions"
 
