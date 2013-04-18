@@ -13,8 +13,8 @@ module Withings::Api
     def initialize(json_or_hash)
       hash = coerce_hash json_or_hash
 
-      self.measurement_type = MeasurementType.lookup(hash["type"])
-      self.value_raw = hash["value"]
+      self.measurement_type = MeasurementType.lookup(hash["type"]) || MeasurementType.lookup(hash["measurement_type"]["id"])
+      self.value_raw = hash["value"] || hash["value_raw"]
       self.unit = hash["unit"]
     end
 
