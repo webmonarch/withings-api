@@ -16,4 +16,3 @@ module Withings::Api
     end
   end
 end
-
