@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+date: Thu, 29 Mar 2012 02:01:41 GMT
+server: Apache/2.2.14 (Ubuntu)
+vary: Accept-Encoding
+content-type: text/plain
+via: 1.1 proxyapi.withings.net
+connection: close
+
+
+{"status": 0 }

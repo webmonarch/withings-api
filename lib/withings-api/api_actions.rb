@@ -1,4 +1,5 @@
 require "withings-api/results/measure_getmeas_results"
+require 'withings-api/api_actions/notifications'
 
 module Withings
   module Api
@@ -8,6 +9,7 @@ module Withings
     # For a complete list of available API actions, see @ http://www.withings.com/en/api/wbsapiv2
     module ApiActions
       include OAuthBase
+      include Notifications
 
       # measure/getmeas API call.  Full details @ www.withings.com/en/api/wbsapiv2#getmeas
       #

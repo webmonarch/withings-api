@@ -18,6 +18,8 @@ module Withings::Api
 
       if hash.key?("body")
         @body = body_class.new(hash["body"])
+      else
+        @body = body_class.new(hash)
       end
     end
 
